@@ -18,22 +18,22 @@
 - (検討中)k8sの開発環境
  
 ## 使い方
-1. docker-compose up -d
+1. git checkout ts-mongo
+2. docker-compose up -d
  
 ## インストール
  
 ```
 $ git clone https://github.com/Jp29tkDg79/simple-chat.git
 $ cd simple-chat
+$ git checkout ts-mongo
 $ docker-compose up -d
 $ ~do anything~
 ```
  
 ## その他
  
-mainブランチのみでは動作しません。
-別のブランチでバックエンドを作成ありますので、使用したいブランチにチェックアウトしてご使用ください。
-開発予定言語一覧：java,typescript,python,go
+typescriptとmongoDBで作成
  
 ## 作者
  

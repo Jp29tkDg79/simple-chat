@@ -16,6 +16,9 @@ services:
     restart: always
     depends_on:
       - client
+      - api
+      - socket
+      - mongo
 
   client:
     image: simple_chat_client
@@ -29,6 +32,70 @@ services:
     expose:
       - 3000
     command: sh -c "npm run build && npm run dev"
+    tty: true
+    stdin_open: true
+    restart: always
+    depends_on:
+      - api
+      - socket
+
+  socket:
+    image: simple_chat_socket
+    build:
+      context: socket
+      dockerfile: Dockerfile
+    working_dir: /app
+    expose:
+      - 5000
+    volumes:
+      - ./socket:/app
+      - /app/node_modules
+    environment:
+      - PORT=5000
+      - CORS_ORIGIN_URL=localhost/chat
+      - MONGO_URI=mongodb://mongo:27017/chat
+      - MONGO_CLIENT=chat
+      - MONGO_CLIENT_PASSWORD=chat
+    tty: true
+    stdin_open: true
+    restart: always
+    depends_on:
+      - mongo
+
+  api:
+    image: simple_chat_api
+    build:
+      context: api
+      dockerfile: Dockerfile
+    working_dir: /app
+    volumes:
+      - ./api:/app
+      - /app/node_modules
+    expose:
+      - 5100
+    environment:
+      - PORT=5100
+      - MONGO_URI=mongodb://mongo:27017/user
+      - MONGO_CLIENT=user
+      - MONGO_CLIENT_PASSWORD=user
+    command: npm start
+    tty: true
+    stdin_open: true
+    restart: always
+    depends_on:
+      - mongo
+
+  mongo:
+    image: simple_chat_mongo
+    build:
+      context: mongo
+      dockerfile: Dockerfile
+    volumes:
+      - ./mongo/initdb.d:/docker-entrypoint-initdb.d
+      - ./mongo/db:/var/lib/mongo
+    ports:
+      - 27017:27017
+    command: mongod --dbpath /var/lib/mongo
     tty: true
     stdin_open: true
     restart: always
