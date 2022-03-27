@@ -1,0 +1,27 @@
+.notFoundContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notFoundBox {
+  text-align: center;
+}
+
+.notFoundBox h2 {
+  font-size: 3rem;
+  margin: 2rem;
+}
+
+.notFoundBox p {
+  margin: 2rem;
+  font-size: 1.2rem;
+}
+
+.notFoundBox a {
+  text-decoration: none;
+}
+
+.notFoundBox a:hover {
+  color: red;
+}

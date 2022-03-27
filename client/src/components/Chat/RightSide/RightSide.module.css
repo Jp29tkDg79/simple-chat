@@ -1,0 +1,19 @@
+.errorMessageContainer {
+  text-align: center;
+  margin: 20px;
+  background-color: #ee7373;
+  color: white;
+}
+
+.errorTitle {
+  padding: 20px;
+  margin: 20px;
+  font-size: 2rem;
+  color: #a3c65c;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.errorMessage {
+  font-size: 1.2rem;
+  padding-bottom: 20px;
+}

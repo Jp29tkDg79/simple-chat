@@ -1,0 +1,22 @@
+.title {
+  text-align: center;
+  background-color: gray;
+  color: white;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.memberList {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.errorContainer {
+  background-color: #ff8787;
+  color: white;
+}
+
+.errorMessage {
+  text-align: center;
+  font-size: 1.1rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
