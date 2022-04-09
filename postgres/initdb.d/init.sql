@@ -16,7 +16,7 @@ CREATE TABLE "public"."migrate_version" (
 ) WITH (oids = false);
 
 INSERT INTO "migrate_version" ("repository_id", "repository_path", "version") VALUES
-('users',	'.',	1);
+('users',	'.',	1), ('chats',	'.',	1);
 
 DROP TABLE IF EXISTS "users";
 DROP SEQUENCE IF EXISTS users_id_seq;
@@ -33,6 +33,15 @@ CREATE TABLE "public"."users" (
     CONSTRAINT "users_pkey" PRIMARY KEY ("id", "email")
 ) WITH (oids = false);
 
+DROP TABLE IF EXISTS "chats";
+CREATE TABLE "public"."chats" (
+    "room" character varying(255) NOT NULL,
+    "history" json,
+    "members" json,
+    CONSTRAINT "chats_pkey" PRIMARY KEY ("room")
+) WITH (oids = false);
+
 GRANT SELECT, UPDATE, INSERT ON "migrate_version" TO chat;
 GRANT SELECT, UPDATE, INSERT ON "users" TO chat;
+GRANT SELECT, UPDATE, INSERT ON "chats" TO chat;
 GRANT USAGE ON SEQUENCE users_id_seq TO chat;

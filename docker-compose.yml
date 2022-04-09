@@ -2,7 +2,6 @@ version: '3'
 
 services:
   nginx:
-    # image: simple_chat_web
     build:
       context: nginx
       dockerfile: Dockerfile
@@ -18,9 +17,10 @@ services:
     depends_on:
       - client
       - db
+      - api
+      - socket
 
   client:
-    # image: simple_chat_client
     build:
       context: client
       dockerfile: Dockerfile
@@ -37,9 +37,9 @@ services:
     restart: always
     depends_on:
       - db
-
+      - api
+      - socket
   api:
-    # image: simple_chat_api
     build:
       context: api
       dockerfile: Dockerfile
@@ -49,14 +49,31 @@ services:
       - ./api:/app
     expose:
       - 5100
-    command: python main.py -p 5100 -d true
+    command: python main.py -p 5100 -d false
     tty: true
     stdin_open: true
     restart: always
     depends_on:
       - db
+
+  socket:
+    build:
+      context: socket
+      dockerfile: Dockerfile
+    container_name: simple_chat_socket
+    working_dir: /app
+    volumes:
+      - ./socket:/app
+    expose:
+      - 5000
+    command: python main.py -p 5000
+    tty: true
+    stdin_open: true
+    restart: always
+    depends_on:
+      - db
+
   db:
-    # image: simple_chat_db
     build:
       context: postgres
       dockerfile: Dockerfile
@@ -67,7 +84,6 @@ services:
     ports:
       - 5432:5432
     environment:
-      # - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=postgres
 
   adminer:
